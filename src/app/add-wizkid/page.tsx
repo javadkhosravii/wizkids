@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { addWizkid } from "@/redux/wizkidsSlice";
-import  { type Wizkid, roles } from "@/@types/wizkids.type";
+import { type Wizkid, roles } from "@/types/wizkids.type";
 import { Button } from "@/components/ui/button";
 
 export default function AddWizkidPage() {

@@ -6,14 +6,14 @@ import { useParams, useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { updateWizkid } from "@/redux/wizkidsSlice";
-import { Wizkid, roles } from "@/@types/wizkids.type";
+import { Wizkid, roles } from "@/types/wizkids.type";
 import { Button } from "@/components/ui/button";
 
 export default function EditWizkidPage() {
   const { uid } = useParams() as { uid: string };
   const router = useRouter();
   const dispatch = useDispatch();
-    
+
   // Get the wizkid details from Redux using the email parameter
   const wizkidToEdit = useSelector((state: RootState) =>
     state.wizkids.list.find((wizkid) => wizkid.id === uid)
@@ -106,10 +106,7 @@ export default function EditWizkidPage() {
             className="px-3 py-2 border border-border rounded focus:outline-none focus:ring focus:ring-ring bg-background text-current"
           />
         </div>
-        <Button
-          className="w-full"
-          type="submit"
-        >
+        <Button className="w-full" type="submit">
           Save Changes
         </Button>
       </form>

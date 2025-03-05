@@ -1,6 +1,6 @@
 // src/redux/wizkidsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { Wizkid } from "@/@types/wizkids.type";
+import type { Wizkid } from "@/types/wizkids.type";
 import { wizkids as initialWizkids } from "../data/wizkids";
 import { toast } from "sonner";
 
