@@ -39,10 +39,14 @@ const wizkidsSlice = createSlice({
         state.list[index] = { ...state.list[index], ...data };
       }
     },
+    deleteWizkid: (state, action: PayloadAction<string>) => {
+      // Filter using the id property
+      state.list = state.list.filter((wizkid) => wizkid.id !== action.payload);
+    },
   },
 });
 
-export const { addWizkid, updateWizkid } = wizkidsSlice.actions;
+export const { addWizkid, updateWizkid, deleteWizkid } = wizkidsSlice.actions;
 export default wizkidsSlice.reducer;
 
 function hashEmail(email: string) {

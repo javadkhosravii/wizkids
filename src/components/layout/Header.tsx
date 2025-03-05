@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { ModeToggle } from "./ThemeToggler";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
   return (
@@ -8,7 +9,9 @@ export default function Header() {
       <nav className="container flex justify-between h-full">
         <ul className="flex gap-4">
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/">
+              <Button variant="outline">Home</Button>
+            </Link>
           </li>
         </ul>
         <ModeToggle />

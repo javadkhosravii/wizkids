@@ -8,6 +8,7 @@ import { RootState } from "@/redux/store";
 import { updateWizkid } from "@/redux/wizkidsSlice";
 import { Wizkid, roles } from "@/types/wizkids.type";
 import { Button } from "@/components/ui/button";
+import { deleteWizkid } from "@/redux/wizkidsSlice";
 
 export default function EditWizkidPage() {
   const { uid } = useParams() as { uid: string };
@@ -43,10 +44,19 @@ export default function EditWizkidPage() {
     dispatch(updateWizkid({ email: formData.email, data: formData }));
     router.push("/");
   };
+  const handleDelete = () => {
+    dispatch(deleteWizkid(formData.id));
+    router.push("/");
+  };
 
   return (
     <div className="container p-4">
-      <h1 className="text-2xl font-bold mb-4 text-current">Edit Wizkid</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold mb-4 text-current">Edit Wizkid</h1>
+        <Button onClick={handleDelete} variant="destructive">
+          Delete Wizkid
+        </Button>
+      </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label className="mb-1 font-medium text-current">Name:</label>
