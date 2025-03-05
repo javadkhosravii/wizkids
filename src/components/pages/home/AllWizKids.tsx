@@ -1,16 +1,17 @@
 "use client";
 
 import type { Wizkid } from "@/@types/Wizkids.type";
-import React, { use } from "react";
+import React, { useEffect } from "react";
 import WizkidComponent from "./Wizkid";
 
 export default function AllWizKids() {
-  const getAllWizKids = new Promise<Wizkid[]>((resolve) => {
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/wizkids", { cache: "no-store" })
+  const [wizkids, setWizkids] = React.useState<Wizkid[]>([]);
+  // fetch wizkids from the server in client side for simplicity
+  useEffect(() => {
+    fetch("/api/wizkids")
       .then((res) => res.json())
-      .then((data) => resolve(data.wizkids));
-  });
-  const wizkids = use(getAllWizKids);
+      .then((data) => setWizkids(data.wizkids));
+  }, []);
 
   return (
     <>

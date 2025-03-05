@@ -1,6 +1,5 @@
 import AllWizKids from "@/components/pages/home/AllWizKids";
 import { Button } from "@/components/ui/button";
-import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -15,9 +14,7 @@ export default function Home() {
           name, email, role, profile picture, and phone number.
         </p>
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
         <AllWizKids />
-      </Suspense>
     </div>
   );
 }
