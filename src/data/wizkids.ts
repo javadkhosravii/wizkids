@@ -1,4 +1,4 @@
-import type { Wizkid } from "@/@types/Wizkids.type";
+import type { Wizkid } from "@/@types/wizkids.type";
 
 export const wizkids: Wizkid[] = [
   {

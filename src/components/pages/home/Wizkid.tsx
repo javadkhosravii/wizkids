@@ -1,4 +1,4 @@
-import type { Wizkid } from "@/@types/Wizkids.type";
+import type { Wizkid } from "@/@types/wizkids.type";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import React from "react";

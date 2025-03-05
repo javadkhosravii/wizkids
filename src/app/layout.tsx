@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/layout/Header";
+import Providers from "./providers";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Wizkid Manager 2000",
@@ -10,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = "force-dynamic";
-
 
 export default function RootLayout({
   children,
@@ -30,10 +31,10 @@ export default function RootLayout({
           >
             <Header />
             <main className="mt-[var(--header-height)]">
-
-            {children}
+              <Providers>{children}</Providers>
             </main>
           </ThemeProvider>
+          <Toaster />
         </body>
       </html>
     </>

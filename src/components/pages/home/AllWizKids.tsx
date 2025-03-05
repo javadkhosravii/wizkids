@@ -1,25 +1,24 @@
 "use client";
 
-import type { Wizkid } from "@/@types/Wizkids.type";
-import React, { useEffect } from "react";
+// import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import WizkidComponent from "./Wizkid";
 
-export default function AllWizKids() {
-  const [wizkids, setWizkids] = React.useState<Wizkid[]>([]);
-  // fetch wizkids from the server in client side for simplicity
-  useEffect(() => {
-    fetch("/api/wizkids")
-      .then((res) => res.json())
-      .then((data) => setWizkids(data.wizkids));
-  }, []);
+export default function HomePage() {
+  const wizkids = useSelector((state: RootState) => state.wizkids.list);
 
   return (
-    <>
-      <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+      <div
+        suppressHydrationWarning
+        className="grid grid-cols-2 gap-4 max-sm:grid-cols-1"
+      >
         {wizkids.map((wizkid) => (
-          <WizkidComponent key={wizkid.email} wizkid={wizkid} />
+          <WizkidComponent
+            key={wizkid.email}
+            wizkid={wizkid}
+          />
         ))}
       </div>
-    </>
   );
 }
