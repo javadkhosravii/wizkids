@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { addWizkid } from "@/redux/wizkidsSlice";
-import { Wizkid, roles } from "@/@types/wizkids.type";
+import  { type Wizkid, roles } from "@/@types/wizkids.type";
+import { Button } from "@/components/ui/button";
 
 export default function AddWizkidPage() {
   const [wizkid, setWizkid] = useState<Wizkid>({
+    id: "",
     name: "",
     email: "",
     role: roles[0],
@@ -100,12 +102,7 @@ export default function AddWizkidPage() {
             className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
           />
         </div>
-        <button
-          type="submit"
-          className="w-full mt-4 py-2 px-4 text-background bg-foreground font-semibold rounded-md transition-colors duration-200"
-        >
-          Add Wizkid
-        </button>
+        <Button type="submit">Add Wizkid</Button>
       </form>
     </div>
   );

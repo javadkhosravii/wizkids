@@ -25,11 +25,30 @@ const wizkidsSlice = createSlice({
         toast("Email already exists");
         return;
       }
+      // id is hash of email
+      action.payload.id = hashEmail(action.payload.email);
       state.list.push(action.payload);
+    },
+    updateWizkid: (
+      state,
+      action: PayloadAction<{ email: string; data: Partial<Wizkid> }>
+    ) => {
+      const { email, data } = action.payload;
+      const index = state.list.findIndex((w) => w.email === email);
+      if (index !== -1) {
+        state.list[index] = { ...state.list[index], ...data };
+      }
     },
   },
 });
 
-export const { addWizkid } = wizkidsSlice.actions;
+export const { addWizkid, updateWizkid } = wizkidsSlice.actions;
 export default wizkidsSlice.reducer;
 
+function hashEmail(email: string) {
+  let hash = 0;
+  for (let i = 0; i < email.length; i++) {
+    hash = email.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash.toString(16);
+}

@@ -7,6 +7,7 @@ export const wizkids: Wizkid[] = [
     role: "boss",
     profilePicture: "https://i.pravatar.cc/100?img=1",
     phoneNumber: "1234567890",
+    id: "1752b506c",
   },
   {
     name: "Jane Smith",
@@ -14,6 +15,7 @@ export const wizkids: Wizkid[] = [
     role: "developer",
     profilePicture: "https://i.pravatar.cc/100?img=2",
     phoneNumber: "2345678901",
+    id: "-5422d14e",
   },
   {
     name: "Alice Johnson",
@@ -21,6 +23,7 @@ export const wizkids: Wizkid[] = [
     role: "designer",
     profilePicture: "https://i.pravatar.cc/100?img=3",
     phoneNumber: "3456789012",
+    id: "-125df51bc",
   },
   {
     name: "Bob Brown",
@@ -28,6 +31,7 @@ export const wizkids: Wizkid[] = [
     role: "intern",
     profilePicture: "https://i.pravatar.cc/100?img=4",
     phoneNumber: "4567890123",
+    id: "-bf804e42",
   },
   {
     name: "Charlie Davis",
@@ -35,6 +39,7 @@ export const wizkids: Wizkid[] = [
     role: "designer",
     profilePicture: "https://i.pravatar.cc/100?img=5",
     phoneNumber: "5678901234",
+    id: "-19fdb0492",
   },
   {
     name: "Diana Evans",
@@ -42,6 +47,7 @@ export const wizkids: Wizkid[] = [
     role: "developer",
     profilePicture: "https://i.pravatar.cc/100?img=6",
     phoneNumber: "6789012345",
+    id: "c3a37b63",
   },
   {
     name: "Ethan Foster",
@@ -49,6 +55,7 @@ export const wizkids: Wizkid[] = [
     role: "designer",
     profilePicture: "https://i.pravatar.cc/100?img=7",
     phoneNumber: "7890123456",
+    id: "cb7657a",
   },
   {
     name: "Fiona Green",
@@ -56,6 +63,7 @@ export const wizkids: Wizkid[] = [
     role: "developer",
     profilePicture: "https://i.pravatar.cc/100?img=8",
     phoneNumber: "8901234567",
+    id: "164a76041",
   },
   {
     name: "George Harris",
@@ -63,6 +71,7 @@ export const wizkids: Wizkid[] = [
     role: "intern",
     profilePicture: "https://i.pravatar.cc/100?img=9",
     phoneNumber: "9012345678",
+    id: "820d845f",
   },
   {
     name: "Hannah White",
@@ -70,5 +79,6 @@ export const wizkids: Wizkid[] = [
     role: "developer",
     profilePicture: "https://i.pravatar.cc/100?img=10",
     phoneNumber: "0123456789",
+    id: "a99e9ee6",
   },
 ];
