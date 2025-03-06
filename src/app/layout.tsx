@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/layout/Header";
 import Providers from "./providers";
 import { Toaster } from "@/components/ui/sonner";
+import Aunthenticate from "@/components/layout/Aunthenticate";
 
 export const metadata: Metadata = {
   title: "Wizkid Manager 2000",
@@ -29,6 +30,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
+            <Aunthenticate />
             <Header />
             <main className="mt-[var(--header-height)]">{children}</main>
           </Providers>

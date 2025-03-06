@@ -2,11 +2,22 @@
 // import AllWizKids from "@/components/pages/home/AllWizKids";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const AllWizKids = dynamic(() => import("@/components/pages/home/AllWizKids"), {
-  ssr: false});
+  ssr: false,
+});
 
 export default function Home() {
+  const accountType =
+    useSelector((state: RootState) => state.auth.accountType) ??
+    "notAuthenticated";
+
+  if (accountType === "notAuthenticated") {
+    return null;
+  }
+
   return (
     <div className="container">
       <div className="prose mb-4">

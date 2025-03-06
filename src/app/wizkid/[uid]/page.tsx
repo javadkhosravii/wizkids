@@ -14,9 +14,8 @@ export default function EditWizkidPage() {
   const dispatch = useDispatch();
 
   // Get authentication state
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const isAuthenticated =
+    useSelector((state: RootState) => state.auth.accountType) === "user";
 
   // Get the wizkid details using the uid parameter
   const wizkidToEdit = useSelector((state: RootState) =>

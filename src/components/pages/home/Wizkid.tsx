@@ -13,9 +13,8 @@ interface IProps {
 
 export default function WizkidComponent(props: IProps) {
   const { wizkid } = props;
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const isGuest =
+    useSelector((state: RootState) => state.auth.accountType) === "user";
   return (
     <Card className="px-4 dark:border-white">
       <div className="prose " key={wizkid.email}>
@@ -30,11 +29,14 @@ export default function WizkidComponent(props: IProps) {
             />
             <h3 className="!m-0">{wizkid.name}</h3>
           </div>
-          <Link href={`/wizkid/${wizkid.id}`}>
-            <Button>View Profile</Button>
+          <Link
+            className={isGuest ? "" : "pointer-events-none"}
+            href={`/wizkid/${wizkid.id}`}
+          >
+            <Button disabled={!isGuest}>View Profile</Button>
           </Link>
         </div>
-        {isAuthenticated ? (
+        {isGuest ? (
           <>
             <p>
               <b>Email:</b> {wizkid.email}

@@ -8,9 +8,8 @@ import { Button } from "@/components/ui/button";
 import { RootState } from "@/redux/store";
 
 export default function AddWizkidPage() {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const isAuthenticated =
+    useSelector((state: RootState) => state.auth.accountType) === "user";
   const [wizkid, setWizkid] = useState<Wizkid>({
     id: "",
     name: "",
