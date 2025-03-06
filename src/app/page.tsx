@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="container">
-      <div className="prose mb-4">
+      <div className="prose mb-4 mt-[100px]">
         <h1>Wizkids</h1>
         <Link
           className="bg-foreground text-background p-4 rounded-2xl no-underline

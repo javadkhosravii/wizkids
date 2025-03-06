@@ -34,7 +34,7 @@ export default function Header() {
             </Link>
           </li>
         </ul>
-        <div className="flex gap-6">
+        <div className="flex items-center gap-6">
           <UserType />
           <Button onClick={handleLogout} variant="outline">
             Log out

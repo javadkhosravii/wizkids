@@ -50,7 +50,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background ">
+    <div className="min-h-[70svh] flex items-center justify-center bg-background ">
       <div className="w-full max-w-md p-8 bg-card rounded-lg shadow-lg dark:border-white/20 border">
         <p className="mb-4 text-center text-sm text-muted-foreground">
           You can login with this username and password: user
