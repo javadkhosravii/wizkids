@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { ModeToggle } from "./ThemeToggler";
 import { Button } from "@/components/ui/button";
+import AuthDropdown from "@/app/AuththDropdown";
 
 export default function Header() {
   return (
@@ -14,7 +15,10 @@ export default function Header() {
             </Link>
           </li>
         </ul>
-        <ModeToggle />
+        <div className="flex gap-6">
+          <AuthDropdown />
+          <ModeToggle />
+        </div>
       </nav>
     </header>
   );

@@ -1,21 +1,24 @@
-// app/edit-wizkid/[email]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { updateWizkid } from "@/redux/wizkidsSlice";
+import { updateWizkid, deleteWizkid } from "@/redux/wizkidsSlice";
 import { Wizkid, roles } from "@/types/wizkids.type";
 import { Button } from "@/components/ui/button";
-import { deleteWizkid } from "@/redux/wizkidsSlice";
 
 export default function EditWizkidPage() {
   const { uid } = useParams() as { uid: string };
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // Get the wizkid details from Redux using the email parameter
+  // Get authentication state
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
+  // Get the wizkid details using the uid parameter
   const wizkidToEdit = useSelector((state: RootState) =>
     state.wizkids.list.find((wizkid) => wizkid.id === uid)
   );
@@ -41,10 +44,15 @@ export default function EditWizkidPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Only allow update if authenticated
+    if (!isAuthenticated) return;
     dispatch(updateWizkid({ email: formData.email, data: formData }));
     router.push("/");
   };
+
   const handleDelete = () => {
+    // Only allow deletion if authenticated
+    if (!isAuthenticated) return;
     dispatch(deleteWizkid(formData.id));
     router.push("/");
   };
@@ -53,9 +61,11 @@ export default function EditWizkidPage() {
     <div className="container p-4">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold mb-4 text-current">Edit Wizkid</h1>
-        <Button onClick={handleDelete} variant="destructive">
-          Delete Wizkid
-        </Button>
+        {isAuthenticated && (
+          <Button onClick={handleDelete} variant="destructive">
+            Delete Wizkid
+          </Button>
+        )}
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col">
@@ -65,6 +75,7 @@ export default function EditWizkidPage() {
             value={formData.name}
             onChange={handleChange}
             required
+            disabled={!isAuthenticated}
             className="px-3 py-2 border border-border rounded focus:outline-none focus:ring focus:ring-ring bg-background text-current"
           />
         </div>
@@ -86,6 +97,7 @@ export default function EditWizkidPage() {
             name="role"
             value={formData.role}
             onChange={handleChange}
+            disabled={!isAuthenticated}
             className="px-3 py-2 border border-border rounded focus:outline-none focus:ring focus:ring-ring bg-background text-current"
           >
             {roles.map((role) => (
@@ -103,6 +115,7 @@ export default function EditWizkidPage() {
             name="profilePicture"
             value={formData.profilePicture}
             onChange={handleChange}
+            disabled={!isAuthenticated}
             className="px-3 py-2 border border-border rounded focus:outline-none focus:ring focus:ring-ring bg-background text-current"
           />
         </div>
@@ -113,13 +126,19 @@ export default function EditWizkidPage() {
             value={formData.phoneNumber}
             onChange={handleChange}
             required
+            disabled={!isAuthenticated}
             className="px-3 py-2 border border-border rounded focus:outline-none focus:ring focus:ring-ring bg-background text-current"
           />
         </div>
-        <Button className="w-full" type="submit">
+        <Button className="w-full" type="submit" disabled={!isAuthenticated}>
           Save Changes
         </Button>
       </form>
+      {!isAuthenticated && (
+        <p className="mt-4 text-sm text-muted-foreground">
+          You are viewing as a guest. Editing and deletion are disabled.
+        </p>
+      )}
     </div>
   );
 }

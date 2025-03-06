@@ -19,24 +19,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
             <Header />
-            <main className="mt-[var(--header-height)]">
-              <Providers>{children}</Providers>
-            </main>
-          </ThemeProvider>
-          <Toaster />
-        </body>
-      </html>
-    </>
+            <main className="mt-[var(--header-height)]">{children}</main>
+          </Providers>
+        </ThemeProvider>
+        <Toaster />
+      </body>
+    </html>
   );
 }
