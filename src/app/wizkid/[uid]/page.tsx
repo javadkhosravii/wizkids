@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { updateWizkid, deleteWizkid } from "@/redux/wizkidsSlice";
+import { updateWizkid, deleteWizkid, fire } from "@/redux/wizkidsSlice";
 import { Wizkid, roles } from "@/types/wizkids.type";
 import { Button } from "@/components/ui/button";
 
@@ -56,14 +56,33 @@ export default function EditWizkidPage() {
     router.push("/");
   };
 
+  const handleFire = () => {
+    // Only allow firing if authenticated
+    if (!isAuthenticated) return;
+    const id = formData.id;
+    dispatch(
+      fire(id)
+    );
+  };
+
   return (
     <div className="container p-4">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold mb-4 text-current">Edit Wizkid</h1>
+        <p>
+          <strong>Status:</strong> {formData.fired ? "Fired" : "Not Fired"}
+        </p>
         {isAuthenticated && (
-          <Button onClick={handleDelete} variant="destructive">
-            Delete Wizkid
-          </Button>
+          <>
+            <Button onClick={handleDelete} variant="destructive">
+              Delete Wizkid
+            </Button>
+            {!formData.fired && (
+              <Button onClick={handleFire} variant="destructive">
+                Fire Wizkid
+              </Button>
+            )}
+          </>
         )}
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">

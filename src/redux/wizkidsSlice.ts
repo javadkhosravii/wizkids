@@ -19,7 +19,26 @@ const wizkidsSlice = createSlice({
   name: "wizkids",
   initialState,
   reducers: {
+    fire: (state, action: PayloadAction<string>) => {
+      if (!state.currentUser || state.currentUser.fired) {
+        toast("Not authenticated");
+        return;
+      }
+      if (state.currentUser.id === action.payload) {
+        toast("You cannot fire yourself");
+        return;
+      }
+      const index = state.list.findIndex((w) => w.id === action.payload);
+      if (index !== -1) {
+        state.list[index].fired = true;
+      }
+    },
     addWizkid: (state, action: PayloadAction<Wizkid>) => {
+      // is user authenticated and not fired
+      if (!state.currentUser || state.currentUser.fired) {
+        toast("Not authenticated");
+        return;
+      }
       action.payload.profilePicture = `https://i.pravatar.cc/100?img=${Math.floor(
         Math.random() * 70 + 1
       )}`;
@@ -38,6 +57,11 @@ const wizkidsSlice = createSlice({
       state,
       action: PayloadAction<{ email: string; data: Partial<Wizkid> }>
     ) => {
+      // is user authenticated and not fired
+      if (!state.currentUser || state.currentUser.fired) {
+        toast("Not authenticated");
+        return;
+      }
       const { email, data } = action.payload;
       const index = state.list.findIndex((w) => w.email === email);
       if (index !== -1) {
@@ -47,7 +71,7 @@ const wizkidsSlice = createSlice({
     deleteWizkid: (state, action: PayloadAction<string>) => {
       // Filter using the id property
       // return if not authenticated
-      if (!state.currentUser) {
+      if (!state.currentUser || state.currentUser.fired) {
         toast("Not authenticated");
         return;
       }
@@ -70,10 +94,15 @@ const wizkidsSlice = createSlice({
           wizkid.password === hashPassword(password)
       );
       if (user) {
+        if (user.fired) {
+          toast("You are fired");
+          return;
+        }
         state.currentUser = user;
         window.open("/", "_self");
       } else {
         toast("Invalid credentials");
+        return;
       }
     },
     // New logout reducer: Clears the currentUser.
@@ -83,6 +112,6 @@ const wizkidsSlice = createSlice({
   },
 });
 
-export const { addWizkid, updateWizkid, deleteWizkid, login, logout } =
+export const { addWizkid, updateWizkid, deleteWizkid, login, logout, fire } =
   wizkidsSlice.actions;
 export default wizkidsSlice.reducer;

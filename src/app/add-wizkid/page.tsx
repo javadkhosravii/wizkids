@@ -9,7 +9,7 @@ import { RootState } from "@/redux/store";
 
 export default function AddWizkidPage() {
   const isAuthenticated = useSelector(
-    (state: RootState) => state.wizkids.currentUser
+    (state: RootState) => state.wizkids.currentUser !== null && !state.wizkids.currentUser.fired
   );
   const [wizkid, setWizkid] = useState<Wizkid>({
     id: "",
