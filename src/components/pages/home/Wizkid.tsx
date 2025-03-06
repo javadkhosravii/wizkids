@@ -13,8 +13,10 @@ interface IProps {
 
 export default function WizkidComponent(props: IProps) {
   const { wizkid } = props;
-  const isGuest =
-    useSelector((state: RootState) => state.auth.accountType) === "user";
+  const isGuest = useSelector((state: RootState) => {
+    return state.wizkids.currentUser !== null;
+  });
+
   return (
     <Card className="px-4 dark:border-white">
       <div className="prose " key={wizkid.email}>

@@ -8,14 +8,16 @@ import { Button } from "@/components/ui/button";
 import { RootState } from "@/redux/store";
 
 export default function AddWizkidPage() {
-  const isAuthenticated =
-    useSelector((state: RootState) => state.auth.accountType) === "user";
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.wizkids.currentUser
+  );
   const [wizkid, setWizkid] = useState<Wizkid>({
     id: "",
     name: "",
     email: "",
     role: roles[0],
     profilePicture: "",
+    password: "",
     phoneNumber: "",
   });
   const dispatch = useDispatch();
@@ -73,6 +75,19 @@ export default function AddWizkidPage() {
             name="email"
             type="email"
             value={wizkid.email}
+            onChange={handleChange}
+            required
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
+          />
+        </div>
+        <div className="flex flex-col">
+          <div className="prose">
+            <label className="mb-1 font-medium">Password:</label>
+          </div>
+          <input
+            name="password"
+            type="password"
+            value={wizkid.password}
             onChange={handleChange}
             required
             className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"

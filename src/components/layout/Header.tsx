@@ -4,25 +4,17 @@ import React from "react";
 import { ModeToggle } from "./ThemeToggler";
 import { Button } from "@/components/ui/button";
 import UserType from "@/app/userType";
-import { useDispatch } from "react-redux";
-import { logout } from "@/redux/authSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/wizkidsSlice";
 import { RootState } from "@/redux/store";
 
 export default function Header() {
+  const user = useSelector((state: RootState) => state.wizkids.currentUser);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logout());
   };
-
-  const accountType =
-    useSelector((state: RootState) => state.auth.accountType) ??
-    "notAuthenticated";
-
-  if (accountType === "notAuthenticated") {
-    return null;
-  }
 
   return (
     <header className="w-full bg-background h-[var(--header-height)] fixed top-0">
@@ -36,9 +28,16 @@ export default function Header() {
         </ul>
         <div className="flex items-center gap-6">
           <UserType />
-          <Button onClick={handleLogout} variant="outline">
-            Log out
-          </Button>
+          {user ? (
+            <Button onClick={handleLogout} variant="outline">
+              Log out
+            </Button>
+          ) : (
+            <Link href="/login">
+              <Button variant="outline">Log in</Button>
+            </Link>
+          )}
+
           <ModeToggle />
         </div>
       </nav>

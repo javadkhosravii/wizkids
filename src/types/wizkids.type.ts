@@ -1,6 +1,6 @@
-export const roles = ['boss', 'developer', 'designer', 'intern'] as const;
+export const roles = ["boss", "developer", "designer", "intern"] as const;
 
-export type Role = typeof roles[number];
+export type Role = (typeof roles)[number];
 
 export interface Wizkid {
   id: string;
@@ -9,4 +9,6 @@ export interface Wizkid {
   role: Role;
   profilePicture: string;
   phoneNumber: string;
+  fired?: boolean;
+  password: string;
 }

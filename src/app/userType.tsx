@@ -6,12 +6,11 @@ import { RootState } from "@/redux/store";
 
 export default function AuthDropdown() {
   const accountType =
-    useSelector((state: RootState) => state.auth.accountType) ??
-    "notAuthenticated";
-
-  if (accountType === "notAuthenticated") {
-    return null;
-  }
+    useSelector((state: RootState) => state.wizkids.currentUser
+      ? "user"
+      : state.wizkids.currentUser === null
+      ? "guest"
+      : "none");
 
   const GetAccountTypeTitle = () => {
     if (accountType === "user") {

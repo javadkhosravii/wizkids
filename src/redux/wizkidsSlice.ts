@@ -3,13 +3,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { Wizkid } from "@/types/wizkids.type";
 import { wizkids as initialWizkids } from "../data/wizkids";
 import { toast } from "sonner";
+import { hashEmail, hashPassword } from "@/lib/utils";
 
 interface WizkidsState {
   list: Wizkid[];
+  currentUser: Wizkid | null;
 }
 
 const initialState: WizkidsState = {
   list: initialWizkids,
+  currentUser: null,
 };
 
 const wizkidsSlice = createSlice({
@@ -27,6 +30,8 @@ const wizkidsSlice = createSlice({
       }
       // id is hash of email
       action.payload.id = hashEmail(action.payload.email);
+      // hash password before saving
+      action.payload.password = hashPassword(action.payload.password);
       state.list.push(action.payload);
     },
     updateWizkid: (
@@ -41,18 +46,43 @@ const wizkidsSlice = createSlice({
     },
     deleteWizkid: (state, action: PayloadAction<string>) => {
       // Filter using the id property
+      // return if not authenticated
+      if (!state.currentUser) {
+        toast("Not authenticated");
+        return;
+      }
+      const isUserIdCurrentlyLoggedIn = state.currentUser!.id === action.payload;
+      // if the user is deleting their own account, log them out after deletion
+      if (isUserIdCurrentlyLoggedIn) {
+        state.currentUser = null;
+      }
       state.list = state.list.filter((wizkid) => wizkid.id !== action.payload);
+    },
+    // New login reducer: Checks for a wizkid with matching email and password.
+    login: (
+      state,
+      action: PayloadAction<{ email: string; password: string }>
+    ) => {
+      const { email, password } = action.payload;
+      const user = state.list.find(
+        (wizkid) =>
+          wizkid.email.toLowerCase() === email.toLowerCase() &&
+          wizkid.password === hashPassword(password)
+      );
+      if (user) {
+        state.currentUser = user;
+        window.open("/", "_self");
+      } else {
+        toast("Invalid credentials");
+      }
+    },
+    // New logout reducer: Clears the currentUser.
+    logout: (state) => {
+      state.currentUser = null;
     },
   },
 });
 
-export const { addWizkid, updateWizkid, deleteWizkid } = wizkidsSlice.actions;
+export const { addWizkid, updateWizkid, deleteWizkid, login, logout } =
+  wizkidsSlice.actions;
 export default wizkidsSlice.reducer;
-
-function hashEmail(email: string) {
-  let hash = 0;
-  for (let i = 0; i < email.length; i++) {
-    hash = email.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return hash.toString(16);
-}
