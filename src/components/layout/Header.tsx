@@ -17,7 +17,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-background h-[var(--header-height)] fixed top-0">
+    <header className="w-full bg-background h-[var(--header-height)] fixed top-0 z-50">
       <nav className="container flex justify-between h-full">
         <ul className="flex gap-4">
           <li>
