@@ -33,6 +33,16 @@ const wizkidsSlice = createSlice({
         state.list[index].fired = true;
       }
     },
+    unfire: (state, action: PayloadAction<string>) => {
+      if (!state.currentUser || state.currentUser.fired) {
+        toast("Not authenticated");
+        return;
+      }
+      const index = state.list.findIndex((w) => w.id === action.payload);
+      if (index !== -1) {
+        state.list[index].fired = false;
+      }
+    },
     addWizkid: (state, action: PayloadAction<Wizkid>) => {
       // is user authenticated and not fired
       if (!state.currentUser || state.currentUser.fired) {
@@ -75,7 +85,8 @@ const wizkidsSlice = createSlice({
         toast("Not authenticated");
         return;
       }
-      const isUserIdCurrentlyLoggedIn = state.currentUser!.id === action.payload;
+      const isUserIdCurrentlyLoggedIn =
+        state.currentUser!.id === action.payload;
       // if the user is deleting their own account, log them out after deletion
       if (isUserIdCurrentlyLoggedIn) {
         state.currentUser = null;
@@ -112,6 +123,6 @@ const wizkidsSlice = createSlice({
   },
 });
 
-export const { addWizkid, updateWizkid, deleteWizkid, login, logout, fire } =
+export const { addWizkid, updateWizkid, deleteWizkid, login, logout, fire, unfire } =
   wizkidsSlice.actions;
 export default wizkidsSlice.reducer;

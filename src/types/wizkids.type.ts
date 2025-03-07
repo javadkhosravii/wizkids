@@ -10,5 +10,6 @@ export interface Wizkid {
   profilePicture: string;
   phoneNumber: string;
   fired?: boolean;
+  unfired?: boolean;
   password: string;
 }
