@@ -6,9 +6,10 @@ import { RootState } from "@/redux/store";
 import WizkidComponent from "./Wizkid";
 import { roles } from "@/types/wizkids.type";
 import { removeFiredWizkids } from "@/redux/wizkidsSlice";
+import { toast } from "sonner";
 
 export default function HomePage() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const wizkids = useSelector((state: RootState) => state.wizkids.list);
   const isAuthenticated = useSelector(
     (state: RootState) =>
@@ -29,6 +30,19 @@ export default function HomePage() {
     }, 10 * 1000); // every 10 seconds for testing
     return () => clearInterval(intervalId);
   }, [dispatch]);
+
+  // Show toast message "Sign in to use all features" once after 20 seconds if not authenticated
+  useEffect(() => {
+    // Only set the timeout if the user is not authenticated.
+    if (!isAuthenticated) {
+      const timer = setTimeout(() => {
+        toast("Sign in to use all features");
+      }, 20000); // 20 seconds
+
+      // Cleanup the timer if the component unmounts or if authentication status changes.
+      return () => clearTimeout(timer);
+    }
+  }, [isAuthenticated]);
 
   const filteredWizkids = wizkids.filter((wizkid) => {
     // Filter based on search terms and role
@@ -62,9 +76,9 @@ export default function HomePage() {
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
-          className="py-2 px-4 border border-gray-300 rounded"
+          className="px-2 border border-gray-300 rounded"
         >
-          <option className="h-full" value="">
+          <option value="">
             All Roles
           </option>
           {roles.map((role) => (

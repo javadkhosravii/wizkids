@@ -47,7 +47,6 @@ const wizkidsSlice = createSlice({
     removeFiredWizkids: (state) => {
       // clean fired wizkids after 7 days
       if (!state.currentUser || state.currentUser.fired) {
-        toast("Not authenticated");
         return;
       }
       state.list = state.list.filter(
