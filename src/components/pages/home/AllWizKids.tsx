@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import WizkidComponent from "./Wizkid";
 import { roles } from "@/types/wizkids.type";
+import { removeFiredWizkids } from "@/redux/wizkidsSlice";
 
 export default function HomePage() {
+    const dispatch = useDispatch();
   const wizkids = useSelector((state: RootState) => state.wizkids.list);
   const isAuthenticated = useSelector(
     (state: RootState) =>
@@ -14,6 +16,19 @@ export default function HomePage() {
   );
   const [search, setSearch] = useState("");
   const [role, setRole] = useState("");
+
+  // Dispatch the remove action when the component mounts
+  useEffect(() => {
+    dispatch(removeFiredWizkids());
+  }, [dispatch]);
+
+  // Optionally, dispatch the remove action periodically
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      dispatch(removeFiredWizkids());
+    }, 10 * 1000); // every 10 seconds for testing
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
 
   const filteredWizkids = wizkids.filter((wizkid) => {
     // Filter based on search terms and role

@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { updateWizkid, deleteWizkid, fire, unfire } from "@/redux/wizkidsSlice";
+import {
+  updateWizkid,
+  deleteWizkid,
+  fire,
+  unfire,
+} from "@/redux/wizkidsSlice";
 import { Wizkid, roles } from "@/types/wizkids.type";
 import { Button } from "@/components/ui/button";
 
@@ -12,6 +17,7 @@ export default function EditWizkidPage() {
   const { uid } = useParams() as { uid: string };
   const router = useRouter();
   const dispatch = useDispatch();
+
 
   // Get authentication state
   const isAuthenticated = useSelector(
@@ -65,7 +71,7 @@ export default function EditWizkidPage() {
   };
 
   const handleUnfire = () => {
-    // Only allow firing if authenticated
+    // Only allow unfire if authenticated
     if (!isAuthenticated) return;
     const id = formData.id;
     dispatch(unfire(id));
@@ -73,13 +79,13 @@ export default function EditWizkidPage() {
 
   return (
     <div className="container p-4">
-      <div className="flex justify-between">
+      <div className="flex max-[450px]:flex-col justify-between mt-6 mb-8 gap-4">
         <h1 className="text-2xl font-bold mb-4 text-current">Edit Wizkid</h1>
         <p>
           <strong>Status:</strong> {formData.fired ? "Fired" : "Not Fired"}
         </p>
         {isAuthenticated && (
-          <>
+          <div className="flex gap-4 max-md:flex-col">
             <Button onClick={handleDelete} variant="destructive">
               Delete Wizkid
             </Button>
@@ -92,7 +98,7 @@ export default function EditWizkidPage() {
                 Fire Wizkid
               </Button>
             )}
-          </>
+          </div>
         )}
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">

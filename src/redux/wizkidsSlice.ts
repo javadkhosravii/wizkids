@@ -31,6 +31,7 @@ const wizkidsSlice = createSlice({
       const index = state.list.findIndex((w) => w.id === action.payload);
       if (index !== -1) {
         state.list[index].fired = true;
+        state.list[index].firedAt = Date.now(); // store the timestamp of the firing
       }
     },
     unfire: (state, action: PayloadAction<string>) => {
@@ -42,6 +43,27 @@ const wizkidsSlice = createSlice({
       if (index !== -1) {
         state.list[index].fired = false;
       }
+    },
+    removeFiredWizkids: (state) => {
+      // clean fired wizkids after 7 days
+      if (!state.currentUser || state.currentUser.fired) {
+        toast("Not authenticated");
+        return;
+      }
+      state.list = state.list.filter(
+        (wizkid) =>
+          !wizkid.fired ||
+          Date.now() - wizkid.firedAt! < 7 * 24 * 60 * 60 * 1000
+      );
+      // clean fired wizkids after 2 minutes (testing)
+      // if (!state.currentUser || state.currentUser.fired) {
+      //   toast("Not authenticated");
+      //   return;
+      // }
+      // state.list = state.list.filter(
+      //   (wizkid) =>
+      //     !wizkid.fired || Date.now() - wizkid.firedAt! < 2 * 60 * 1000 // 2 minutes in milliseconds
+      // );
     },
     addWizkid: (state, action: PayloadAction<Wizkid>) => {
       // is user authenticated and not fired
@@ -123,6 +145,14 @@ const wizkidsSlice = createSlice({
   },
 });
 
-export const { addWizkid, updateWizkid, deleteWizkid, login, logout, fire, unfire } =
-  wizkidsSlice.actions;
+export const {
+  addWizkid,
+  updateWizkid,
+  deleteWizkid,
+  login,
+  logout,
+  fire,
+  unfire,
+  removeFiredWizkids,
+} = wizkidsSlice.actions;
 export default wizkidsSlice.reducer;

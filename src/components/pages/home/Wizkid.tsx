@@ -14,7 +14,9 @@ interface IProps {
 export default function WizkidComponent(props: IProps) {
   const { wizkid } = props;
   const isGuest = useSelector((state: RootState) => {
-    return state.wizkids.currentUser !== null && !state.wizkids.currentUser.fired;
+    return (
+      state.wizkids.currentUser !== null && !state.wizkids.currentUser.fired
+    );
   });
 
   return (
@@ -30,11 +32,7 @@ export default function WizkidComponent(props: IProps) {
               alt={wizkid.name}
             />
             <h3 className="!m-0">{wizkid.name}</h3>
-            {
-              wizkid.fired && (
-                <span className="text-red-500">Fired</span>
-              )
-            }
+            {wizkid.fired && <span className="text-red-500 border-2 border-black-500 dark:border-white/40 rounded-sm px-4">Fired</span>}
           </div>
           <Link
             className={isGuest ? "" : "pointer-events-none"}

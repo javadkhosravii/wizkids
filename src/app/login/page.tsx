@@ -72,7 +72,7 @@ export default function LoginPage() {
             />
           </div>
           <Button className="mx-auto" type="submit">
-            Sign in as Wizkid
+            Sign in
           </Button>
         </form>
         <div className="mt-6 text-center">
